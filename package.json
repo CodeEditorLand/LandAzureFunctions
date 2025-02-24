@@ -1,5 +1,5 @@
 {
-	"name": "vscode-azurefunctions",
+	"name": "@codeeditorland/azurefunctions",
 	"displayName": "Azure Functions",
 	"description": "%azureFunctions.description%",
 	"main": "./main.js",
