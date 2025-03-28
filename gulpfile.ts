@@ -30,7 +30,16 @@ async function prepareForWebpack(): Promise<void> {
 
 let downloadLink;
 async function getFuncLink() {
-	const client = new msRest.ServiceClient();
+    const client = new msRest.ServiceClient();
+    const cliFeed = JSON.parse((await client.sendRequest({ method: 'GET', url: 'https://aka.ms/V00v5v' })).bodyAsText as string);
+    const version = cliFeed.tags['v4-prerelease'].release;
+    console.log(`Func cli feed version: ${version}`);
+    const cliRelease = cliFeed.releases[version].coreTools.find((rel) => {
+        return rel.Architecture === 'x64' && (
+            matchesCliFeedOS(rel.OperatingSystem) ||
+            matchesCliFeedOS(rel.OS)
+        );
+    });
 
 	const cliFeed = (
 		await client.sendRequest({
